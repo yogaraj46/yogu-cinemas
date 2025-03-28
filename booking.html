@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yogu Cinemas- Book Your Movie Tickets</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f8f8;
+        }
+        
+        a {
+            color: #e50914;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: #111;
+            padding: 15px 0;
+            color: white;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e50914;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-left: 20px;
+        }
+        
+        .search-bar input {
+            padding: 8px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            width: 200px;
+        }
+        
+        .search-bar button {
+            background-color: #e50914;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #e50914;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background-color: #f40612;
+            text-decoration: none;
+        }
+        
+        /* Now showing section */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin: 50px 0 30px;
+        }
+        
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .movie-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .movie-poster {
+            width: 100%;
+            height: 330px;
+            object-fit: cover;
+        }
+        
+        .movie-info {
+            padding: 15px;
+        }
+        
+        .movie-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .movie-genre {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .movie-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .rating-value {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .book-btn {
+            display: block;
+            width: 100%;
+            background-color: #e50914;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .book-btn:hover {
+            background-color: #f40612;
+            text-decoration: none;
+        }
+        
+        /* Cinema locations */
+        .locations-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        .location-card {
+            flex: 0 0 calc(33.333% - 20px);
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .location-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .location-address {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .view-times {
+            display: inline-block;
+            color: #e50914;
+            font-weight: bold;
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: #111;
+            color: #ccc;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 30px;
+            margin-right: 20px;
+        }
+        
+        .footer-section:last-child {
+            margin-right: 0;
+        }
+        
+        .footer-title {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            display: block;
+            width: 36px;
+            height: 36px;
+            background-color: #333;
+            color: white;
+            margin-right: 10px;
+            text-align: center;
+            line-height: 36px;
+            border-radius: 50%;
+        }
+        
+        .social-links a:hover {
+            background-color: #e50914;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+            }
+            
+            .search-bar {
+                margin: 15px 0 0 0;
+                width: 100%;
+            }
+            
+            .search-bar input {
+                width: 100%;
+            }
+            
+            .location-card {
+                flex: 0 0 100%;
+            }
+            
+            .footer-section {
+                flex: 0 0 100%;
+                margin-right: 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">YOGU CINEMAS</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Movies</a></li>
+                        <li><a href="#">Cinemas</a></li>
+                        <li><a href="#">Offers</a></li>
+                        <li><a href="#">My Account</a></li>
+                    </ul>
+                </nav>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for movies...">
+                    <button>Search</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Book Movie Tickets Online</h1>
+            <p>Experience the latest blockbusters in premium theaters. Book now and skip the lines!</p>
+            <a href="#now-showing" class="btn">View Movies</a>
+        </div>
+    </section>
+    
+    <section id="now-showing" class="container">
+        <h2 class="section-title">Now Showing</h2>
+        <div class="movies-grid">
+            <div class="movie-card">
+                <img src="leo.jpeg" alt="Movie poster" class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">LEO</h3>
+                    <div class="movie-genre">Action,Thriller</div>
+                    <div class="movie-rating">
+                        <span class="rating-value">9.9</span>/10
+                    </div>
+                    <a href="#" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            
+            <div class="movie-card">
+                <img src="goat.jpeg" alt="Movie poster" class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">The Greatest Of All Time</h3>
+                    <div class="movie-genre">Action,sci-fi</div>
+                    <div class="movie-rating">
+                        <span class="rating-value">9.5</span>/10
+                    </div>
+                    <a href="#" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            
+            <div class="movie-card">
+                <img src="kathi.jpeg" alt="Movie poster" class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Kaththi</h3>
+                    <div class="movie-genre">Action,Thriller</div>
+                    <div class="movie-rating">
+                        <span class="rating-value">9.2</span>/10
+                    </div>
+                    <a href="#" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            
+            <div class="movie-card">
+                <img src="ghilli.jpeg" alt="Movie poster" class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Ghilli</h3>
+                    <div class="movie-genre">Action,sport</div>
+                    <div class="movie-rating">
+                        <span class="rating-value">10</span>/10
+                    </div>
+                    <a href="#" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            
+            <div class="movie-card">
+                <img src="mersal.jpeg" alt="Movie poster" class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Mersal</h3>
+                    <div class="movie-genre">Action,Thriller</div>
+                    <div class="movie-rating">
+                        <span class="rating-value">9.0</span>/10
+                    </div>
+                    <a href="#" class="book-btn">Book Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="view-more" style="text-align: center; margin-bottom: 40px;">
+            <a href="#" class="btn">View All Movies</a>
+        </div>
+    </section>
+    
+    <section class="container">
+        <h2 class="section-title">Our Cinemas</h2>
+        <div class="locations-container">
+            <div class="location-card">
+                <h3 class="location-name">Yogu Cinemas,Ambattur</h3>
+                <p class="location-address">55 Main Street,busstop road, Ambattur</p>
+                <a href="#" class="view-times">View Showtimes</a>
+            </div>
+            
+            <div class="location-card">
+                <h3 class="location-name">Yogu Cinemas,Vyasarpadi</h3>
+                <p class="location-address">77,Dr.ambrdkar college road,vyasarpadi</p>
+                <a href="#" class="view-times">View Showtimes</a>
+            </div>
+            
+            <div class="location-card">
+                <h3 class="location-name">Yogu Cinemas,Egmore metro</h3>
+                <p class="location-address">57, metro road, egmore chennai</p>
+                <a href="#" class="view-times">View Showtimes</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Movie tickets </h3>
+                    <p>Book movie tickets quickly and easily for the latest films showing at our multiple cinema locations.</p>
+                    <div class="social-links">
+                        <a href="#">Y</a>
+                        <a href="#">O</a>
+                        <a href="#">G</a>
+                        <a href="#">U</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Movies</a></li>
+                        <li><a href="#">Cinemas</a></li>
+                        <li><a href="#">Offers & Promotions</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Help & Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Subscribe</h3>
+                    <p>Get updates on new releases and exclusive offers.</p>
+                    <form style="margin-top: 15px;">
+                        <input type="email" placeholder="Your email" style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 4px;">
+                        <button type="submit" style="width: 100%; padding: 10px; background-color: #e50914; color: white; border: none; border-radius: 4px; cursor: pointer;">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 MovieTix. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
